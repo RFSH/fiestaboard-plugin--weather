@@ -505,10 +505,10 @@ Common weather conditions and their icons:
 3. **Test API directly**:
    ```bash
    # WeatherAPI
-   curl "http://api.weatherapi.com/v1/current.json?key=YOUR_KEY&q=San Francisco"
+   curl "https://api.weatherapi.com/v1/current.json?key=YOUR_KEY&q=San Francisco"
    
    # OpenWeatherMap
-   curl "http://api.openweathermap.org/data/2.5/weather?q=San Francisco&appid=YOUR_KEY&units=imperial"
+   curl "https://api.openweathermap.org/data/2.5/weather?q=San Francisco&appid=YOUR_KEY&units=imperial"
    ```
 4. **Check location format**: Try "City, State" format
 5. **Check logs**: Look for API errors

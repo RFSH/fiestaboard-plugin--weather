@@ -166,7 +166,7 @@ class WeatherSource:
     def _fetch_weatherapi_for_location(self, location: str, location_name: str) -> Optional[Dict[str, Any]]:
         """Fetch weather from WeatherAPI.com for a specific location."""
         # Fetch current weather
-        current_url = "http://api.weatherapi.com/v1/current.json"
+        current_url = "https://api.weatherapi.com/v1/current.json"
         current_params = {
             "key": self.api_key,
             "q": location,
@@ -174,7 +174,7 @@ class WeatherSource:
         }
         
         # Fetch forecast (up to 8 days for multi-day forecast display)
-        forecast_url = "http://api.weatherapi.com/v1/forecast.json"
+        forecast_url = "https://api.weatherapi.com/v1/forecast.json"
         forecast_params = {
             "key": self.api_key,
             "q": location,

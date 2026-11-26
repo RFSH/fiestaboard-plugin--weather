@@ -103,9 +103,38 @@ class TestWeatherSource:
             locations=[{"location": "InvalidLocation123", "name": "BAD"}]
         )
         result = source.fetch_current_weather()
-        
+
         # Should handle gracefully
         assert result is None
+
+    @patch('requests.get')
+    def test_weatherapi_uses_https(self, mock_get):
+        """The API key and location travel in the query string, so every call must use HTTPS."""
+        mock_response = Mock()
+        mock_response.json.return_value = {
+            "current": {
+                "temp_f": 72,
+                "feelslike_f": 70,
+                "condition": {"text": "Sunny"},
+                "humidity": 45,
+                "wind_mph": 10
+            },
+            "location": {"name": "San Francisco", "region": "California"}
+        }
+        mock_response.raise_for_status = Mock()
+        mock_get.return_value = mock_response
+
+        source = WeatherSource(
+            provider="weatherapi",
+            api_key="test_key",
+            locations=[{"location": "San Francisco, CA", "name": "SF"}]
+        )
+        source.fetch_current_weather()
+
+        urls = [c.args[0] for c in mock_get.call_args_list]
+        assert "https://api.weatherapi.com/v1/current.json" in urls
+        assert "https://api.weatherapi.com/v1/forecast.json" in urls
+        assert all(url.startswith("https://") for url in urls)
 
 
 class TestWeatherDataParsing:
